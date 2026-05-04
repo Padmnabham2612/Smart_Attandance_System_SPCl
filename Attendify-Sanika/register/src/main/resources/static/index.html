@@ -1093,13 +1093,13 @@
             </div>
             <div class="footer-links">
                 <a href="#">About</a>
-                <a href="#">Privacy</a>
+                <a href="#" id="openPrivacy">Privacy Policy</a>
+                <a href="#" id="openTerms">Terms &amp; Conditions</a>
                 <a href="#">Contact</a>
-                <a href="#">Helpdesk</a>
             </div>
         </div>
         <div class="copyright">
-            Copyright 2026 Attendify - Smart Attendance System. All rights reserved.
+            © 2026 SPCL Infotech Pvt Ltd. All Rights Reserved.
             <span style="display: block; margin-top: 12px; font-size: 14px;">Built for reliable, paperless, and secure
                 attendance management.</span>
         </div>
@@ -1185,6 +1185,75 @@
             transition: all 0.1s;
         }
     </style>
+
+    <!-- ========== PRIVACY POLICY MODAL ========== -->
+    <div id="privacyModal" style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(4,20,30,0.85); backdrop-filter:blur(6px); overflow-y:auto; padding:40px 20px;">
+        <div style="max-width:800px; margin:0 auto; background:#0b2e3f; border-radius:24px; padding:50px; color:#c8dde8; border:1px solid rgba(212,175,55,0.2); box-shadow:0 40px 80px rgba(0,0,0,0.5); position:relative;">
+            <button onclick="document.getElementById('privacyModal').style.display='none'" style="position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:white; width:36px; height:36px; border-radius:50%; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+            <h2 style="color:white; font-size:28px; margin-bottom:8px;"><i class="fas fa-shield-halved" style="color:#d4af37; margin-right:10px;"></i>Privacy Policy</h2>
+            <p style="color:#7aa3b8; font-size:13px; margin-bottom:30px;">Last updated: May 2026 &nbsp;|&nbsp; SPCL Infotech Pvt Ltd.</p>
+            <div style="line-height:1.9; font-size:15px;">
+                <h3 style="color:#d4af37; margin:24px 0 10px;">1. Information We Collect</h3>
+                <p>Attendify collects personal information necessary to operate the attendance system, including your name, email address, roll number, mobile number, GPS location (only during an active attendance session), and device identifier.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">2. How We Use Your Information</h3>
+                <p>Information collected is used solely to record and report attendance within your institution. GPS coordinates are captured only at the moment you scan a QR code and are used exclusively for geofence validation. We do not track your location at any other time.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">3. Data Sharing</h3>
+                <p>We do not sell or share your personal data with any third parties. Your attendance data is accessible only to authorised personnel within your institution (Admin, Teachers). Students may only view their own records.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">4. Data Security</h3>
+                <p>All data is protected using industry-standard JWT-based authentication and HTTPS encryption. Passwords are stored in hashed form and are never stored in plain text.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">5. Data Retention</h3>
+                <p>Attendance records are retained for the duration of your institutional enrollment. Upon account deletion by the Admin, all associated personal data is permanently removed from our servers.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">6. Your Rights</h3>
+                <p>You have the right to access, correct, or request deletion of your personal data by contacting your Institution Administrator. For system-level concerns, contact SPCL Infotech Pvt Ltd.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">7. Contact</h3>
+                <p>For privacy-related inquiries, please contact us at <strong style="color:white;">privacy@spclinfotech.com</strong>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== TERMS & CONDITIONS MODAL ========== -->
+    <div id="termsModal" style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(4,20,30,0.85); backdrop-filter:blur(6px); overflow-y:auto; padding:40px 20px;">
+        <div style="max-width:800px; margin:0 auto; background:#0b2e3f; border-radius:24px; padding:50px; color:#c8dde8; border:1px solid rgba(212,175,55,0.2); box-shadow:0 40px 80px rgba(0,0,0,0.5); position:relative;">
+            <button onclick="document.getElementById('termsModal').style.display='none'" style="position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:white; width:36px; height:36px; border-radius:50%; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+            <h2 style="color:white; font-size:28px; margin-bottom:8px;"><i class="fas fa-file-contract" style="color:#d4af37; margin-right:10px;"></i>Terms &amp; Conditions</h2>
+            <p style="color:#7aa3b8; font-size:13px; margin-bottom:30px;">Last updated: May 2026 &nbsp;|&nbsp; SPCL Infotech Pvt Ltd.</p>
+            <div style="line-height:1.9; font-size:15px;">
+                <h3 style="color:#d4af37; margin:24px 0 10px;">1. Acceptance of Terms</h3>
+                <p>By accessing or using Attendify, you agree to be bound by these Terms and Conditions. If you do not agree, please discontinue use of the system immediately.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">2. User Responsibilities</h3>
+                <p>Users are responsible for maintaining the confidentiality of their login credentials. You must not share your password or allow another person to use your account. Any action performed under your account is your responsibility.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">3. Prohibited Conduct</h3>
+                <p>The following are strictly prohibited: (a) using another student's device to mark attendance on their behalf (proxy attendance); (b) attempting to bypass geofence checks; (c) tampering with or reverse-engineering the system; (d) sharing QR codes outside the intended classroom session.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">4. Accuracy of Data</h3>
+                <p>While Attendify strives to maintain accurate records, users should promptly report any discrepancies in their attendance records to their assigned Teacher or Administrator. SPCL Infotech Pvt Ltd is not liable for errors arising from incorrect data entered by institutional staff.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">5. Intellectual Property</h3>
+                <p>All content, design, code, and materials within Attendify are the intellectual property of SPCL Infotech Pvt Ltd. Unauthorised reproduction, distribution, or modification is prohibited.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">6. Limitation of Liability</h3>
+                <p>SPCL Infotech Pvt Ltd shall not be liable for any indirect, incidental, or consequential damages resulting from the use or inability to use the Attendify system, including service interruptions or data loss.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">7. Modifications</h3>
+                <p>SPCL Infotech Pvt Ltd reserves the right to modify these Terms at any time. Continued use of the system after changes are posted constitutes acceptance of the revised Terms.</p>
+                <h3 style="color:#d4af37; margin:24px 0 10px;">8. Governing Law</h3>
+                <p>These Terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts of Pune, Maharashtra.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('openPrivacy').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('privacyModal').style.display = 'block';
+        });
+        document.getElementById('openTerms').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('termsModal').style.display = 'block';
+        });
+        // Close modals on backdrop click
+        ['privacyModal', 'termsModal'].forEach(function(id) {
+            document.getElementById(id).addEventListener('click', function(e) {
+                if (e.target === this) this.style.display = 'none';
+            });
+        });
+    </script>
 </body>
 
 </html>
