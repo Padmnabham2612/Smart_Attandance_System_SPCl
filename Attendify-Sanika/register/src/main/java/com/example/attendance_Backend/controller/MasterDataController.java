@@ -9,9 +9,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -199,19 +201,31 @@ public class MasterDataController {
             "master_divisions", "master_subjects", "master_class_subject_mappings", "master_class_division_teachers"
     }, allEntries = true)
     @DeleteMapping("/divisions/{id}")
+    @Transactional
     public ResponseEntity<?> deleteDivision(@PathVariable int id) {
+        Long adminId = AdminContextHolder.getAdminId();
+        if (adminId == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
         if (userRepository.countByDivisionMaster_Id(id) > 0) {
             return ResponseEntity.badRequest().body("Cannot delete division. It is linked to students.");
         }
         if (attendanceRepository.countByDivisionMaster_Id(id) > 0) {
             return ResponseEntity.badRequest().body("Cannot delete division. It is linked to attendance records.");
         }
-        if (attendanceSessionRepository.countByDivisionMaster_Id(id) > 0) {
+        if (attendanceSessionRepository.countByDivisionMaster_IdAndExpiryTimeAfter(id, LocalDateTime.now()) > 0) {
             return ResponseEntity.badRequest()
                     .body("Cannot delete division. It is linked to active attendance sessions.");
         }
-        if (teacherTimetableRepository.countByDivisionMaster_Id(id) > 0) {
-            return ResponseEntity.badRequest().body("Cannot delete division. It is linked to teacher timetables.");
+        List<TeacherTimetable> linkedTimetables = teacherTimetableRepository.findByDivisionMaster_Id(id);
+        if (!linkedTimetables.isEmpty()) {
+            teacherTimetableRepository.deleteAll(linkedTimetables);
+            teacherTimetableRepository.flush();
+        }
+        List<AttendanceSession> linkedSessions = attendanceSessionRepository.findByDivisionMaster_Id(id);
+        if (!linkedSessions.isEmpty()) {
+            attendanceSessionRepository.deleteAll(linkedSessions);
+            attendanceSessionRepository.flush();
         }
         divisionMasterRepository.deleteById(id);
         return ResponseEntity.ok("Deleted successfully.");
@@ -255,19 +269,31 @@ public class MasterDataController {
             "master_divisions", "master_subjects", "master_class_subject_mappings", "master_class_division_teachers"
     }, allEntries = true)
     @DeleteMapping("/subjects/{id}")
+    @Transactional
     public ResponseEntity<?> deleteSubject(@PathVariable int id) {
+        Long adminId = AdminContextHolder.getAdminId();
+        if (adminId == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
         if (!classSubjectRepository.findBySubjectMasterId(id).isEmpty()) {
             return ResponseEntity.badRequest().body("Cannot delete subject. It is linked to class mappings.");
         }
         if (attendanceRepository.countBySubjectMaster_Id(id) > 0) {
             return ResponseEntity.badRequest().body("Cannot delete subject. It is linked to attendance records.");
         }
-        if (attendanceSessionRepository.countBySubjectMaster_Id(id) > 0) {
+        if (attendanceSessionRepository.countBySubjectMaster_IdAndExpiryTimeAfter(id, LocalDateTime.now()) > 0) {
             return ResponseEntity.badRequest()
                     .body("Cannot delete subject. It is linked to active attendance sessions.");
         }
-        if (teacherTimetableRepository.countBySubjectMaster_Id(id) > 0) {
-            return ResponseEntity.badRequest().body("Cannot delete subject. It is linked to teacher timetables.");
+        List<TeacherTimetable> linkedTimetables = teacherTimetableRepository.findBySubjectMaster_Id(id);
+        if (!linkedTimetables.isEmpty()) {
+            teacherTimetableRepository.deleteAll(linkedTimetables);
+            teacherTimetableRepository.flush();
+        }
+        List<AttendanceSession> linkedSessions = attendanceSessionRepository.findBySubjectMaster_Id(id);
+        if (!linkedSessions.isEmpty()) {
+            attendanceSessionRepository.deleteAll(linkedSessions);
+            attendanceSessionRepository.flush();
         }
         subjectMasterRepository.deleteById(id);
         return ResponseEntity.ok("Deleted successfully.");

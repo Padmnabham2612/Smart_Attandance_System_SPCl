@@ -12,9 +12,17 @@ import java.util.Optional;
 
 @Repository
 public interface TeacherTimetableRepository extends JpaRepository<TeacherTimetable, Integer> {
+    List<TeacherTimetable> findByDivisionMaster_Id(Integer divisionId);
+
+    List<TeacherTimetable> findBySubjectMaster_Id(Integer subjectId);
+
     long countByDivisionMaster_Id(Integer divisionId);
 
     long countBySubjectMaster_Id(Integer subjectId);
+
+    List<TeacherTimetable> findByDivisionMaster_IdAndAdmin_Id(Integer divisionId, Long adminId);
+
+    List<TeacherTimetable> findBySubjectMaster_IdAndAdmin_Id(Integer subjectId, Long adminId);
 
     /** Full week timetable for a teacher (all days, all slots) */
     @Query("""
