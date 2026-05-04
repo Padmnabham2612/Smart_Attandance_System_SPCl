@@ -54,7 +54,7 @@ Follow these steps to get the application running on your local machine.
    ```sql
    CREATE DATABASE attendify;
    ```
-3. The application uses `root` as the default username and `040678` as the password. If your local MySQL credentials differ, update them in `Attendify-Sanika/register/src/main/resources/application.properties`:
+3. The application uses `root` as the default username and `040678` as the password. If your local MySQL credentials differ, update them in `Attendify/register/src/main/resources/application.properties`:
    ```properties
    spring.datasource.username=YOUR_USERNAME
    spring.datasource.password=YOUR_PASSWORD
@@ -63,7 +63,7 @@ Follow these steps to get the application running on your local machine.
 ### Step 2: Build the Project
 1. Open a terminal and navigate to the project directory:
    ```bash
-   cd Attendify-Sanika/register
+   cd Attendify/register
    ```
 2. Clean and build the application using Maven:
    ```bash
